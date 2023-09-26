@@ -66,15 +66,14 @@ const Button = styled.button`
 `;
 
 const StyledLogo = styled.img`
-  width: 80px;
-  height: 40px;
-  margin-top: 130px;
+  padding-top: 80px;
 `;
 
 const StyledMainImage = styled.img`
   max-width: 90%;
   height: auto;
   margin-top: 20px;
+  margin-bottom:10px;
 `;
 
 function App() {
@@ -88,7 +87,7 @@ function App() {
       <Paragraph>Subscribe and get notified</Paragraph>
       <InputButtonContainer>
         <InputContainer>
-          <Input type="text" placeholder="Enter text here" />
+          <Input type="text" placeholder="Your email address" />
         </InputContainer>
         <Button>Notify me</Button>
       </InputButtonContainer>
