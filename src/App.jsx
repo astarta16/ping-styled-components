@@ -1,6 +1,8 @@
+import React, { useState } from "react";
 import Logo from "./assets/logo.svg";
 import styled from "styled-components";
 import MainImage from "./assets/illustration-dashboard.png";
+import validator from "validator";
 
 const CenteredContainer = styled.div`
   display: flex;
@@ -30,10 +32,15 @@ const Span = styled.span`
 
 const InputButtonContainer = styled.div`
   display: flex;
+  flex-direction: column; 
   align-items: center;
   width: 421px;
   gap: 10px;
   margin-top: 20px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 `;
 
 const InputContainer = styled.div`
@@ -42,7 +49,7 @@ const InputContainer = styled.div`
   align-items: center;
   height: 56px;
   border-radius: 28px;
-  border: 1px solid #c2d3ff;
+  border: ${(props) => (props.isError ? "2px solid red" : "2px solid #c2d3ff")};
   background: #fff;
   box-shadow: 0px 0px 7px 3px rgba(0, 0, 0, 0.1);
 `;
@@ -64,6 +71,10 @@ const Button = styled.button`
   color: #fff;
   font-size: 16px;
   cursor: pointer;
+
+  @media (min-width: 768px) {
+    margin-left: 10px;
+  }
 `;
 
 const StyledLogo = styled.img`
@@ -75,13 +86,31 @@ const StyledMainImage = styled.img`
   height: auto;
   margin-top: 20px;
   margin-bottom: 10px;
-  
+
   @media (max-width: 768px) {
     max-width: 90%;
   }
 `;
 
 function App() {
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [hideError, setHideError] = useState(true);
+
+  const validateEmail = () => {
+    if (validator.isEmail(email)) {
+      setEmailError("");
+      setHideError(true);
+    } else {
+      setEmailError("Email is not correct");
+      setHideError(false);
+    }
+  };
+
+  const handleButtonClick = () => {
+    validateEmail();
+  };
+
   return (
     <CenteredContainer>
       <StyledLogo src={Logo} alt="Logo" />
@@ -91,11 +120,18 @@ function App() {
       </Title>
       <Paragraph>Subscribe and get notified</Paragraph>
       <InputButtonContainer>
-        <InputContainer>
-          <Input type="text" placeholder="Your email address" />
+        <InputContainer isError={!!emailError}>
+          <Input
+            onChange={(e) => setEmail(e.target.value)}
+            onBlur={validateEmail}
+            value={email}
+            type="text"
+            placeholder="Your email address"
+          />
         </InputContainer>
-        <Button>Notify me</Button>
+        <Button onClick={handleButtonClick}>Notify me</Button>
       </InputButtonContainer>
+      {!hideError && emailError && <p style={{ color: "red" }}>{emailError}</p>}
       <StyledMainImage src={MainImage} alt="Main Image" />
     </CenteredContainer>
   );
