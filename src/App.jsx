@@ -7,6 +7,7 @@ const CenteredContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   height: 100vh;
 `;
 
@@ -66,14 +67,18 @@ const Button = styled.button`
 `;
 
 const StyledLogo = styled.img`
-  padding-top: 80px;
+  padding-top: 130px;
 `;
 
 const StyledMainImage = styled.img`
-  max-width: 90%;
+  max-width: 50%;
   height: auto;
   margin-top: 20px;
-  margin-bottom:10px;
+  margin-bottom: 10px;
+  
+  @media (max-width: 768px) {
+    max-width: 90%;
+  }
 `;
 
 function App() {
